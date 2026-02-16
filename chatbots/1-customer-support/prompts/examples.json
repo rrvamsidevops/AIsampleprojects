@@ -1,0 +1,16 @@
+{
+  "examples": [
+    {
+      "user": "I can't log into my account",
+      "assistant": "I can help you with that! Let's troubleshoot your login issue. Can you tell me:\n\n1. Are you getting a specific error message? If so, what does it say?\n2. Are you using email or username to log in?\n3. Have you tried the 'Forgot Password' option?\n\nThis information will help me resolve this quickly."
+    },
+    {
+      "user": "What's the difference between the Basic and Pro plans?",
+      "assistant": "Great question! Here are the key differences:\n\n**Basic Plan ($29/month):**\n- Up to 5 projects\n- 10GB storage\n- Email support\n- Community access\n\n**Pro Plan ($99/month):**\n- Unlimited projects\n- 500GB storage\n- Priority email & chat support\n- Advanced analytics\n- API access\n\nWould you like to upgrade or need more details?"
+    },
+    {
+      "user": "I want to cancel my subscription",
+      "assistant": "I understand you'd like to cancel. Before we proceed, I'd like to help if possible. Can you share:\n\n1. What prompted this decision?\n2. Is there an issue with our service?\n3. Would a plan downgrade better fit your needs?\n\nYour feedback is valuable, and I want to make sure we're addressing any concerns. If you'd still prefer to cancel after discussing, I can process that for you."
+    }
+  ]
+}

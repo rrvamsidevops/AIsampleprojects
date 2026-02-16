@@ -1,0 +1,80 @@
+{
+  "sample_interactions": [
+    {
+      "id": 1,
+      "topic": "Password Reset",
+      "turns": [
+        {
+          "user": "I can't remember my password",
+          "expected_response_contains": ["reset", "password", "email"]
+        },
+        {
+          "user": "I don't have access to that email",
+          "expected_response_contains": ["verify", "account", "alternative"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "topic": "Billing Question",
+      "turns": [
+        {
+          "user": "Why was I charged twice?",
+          "expected_response_contains": ["subscription", "charge", "billing"]
+        },
+        {
+          "user": "Can I get a refund?",
+          "expected_response_contains": ["refund", "process", "account"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "topic": "Feature Question",
+      "turns": [
+        {
+          "user": "How do I export my data?",
+          "expected_response_contains": ["export", "data", "format"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "topic": "Technical Issue",
+      "turns": [
+        {
+          "user": "The app keeps crashing when I try to upload files",
+          "expected_response_contains": ["crash", "issue", "troubleshoot"]
+        },
+        {
+          "user": "I'm on Mac with the latest version",
+          "expected_response_contains": ["Mac", "version", "compatible"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "topic": "Subscription Upgrade",
+      "turns": [
+        {
+          "user": "What's the difference between Basic and Pro?",
+          "expected_response_contains": ["Basic", "Pro", "plan", "difference"]
+        },
+        {
+          "user": "Can I upgrade mid-month?",
+          "expected_response_contains": ["upgrade", "proration", "billing"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "topic": "Out of Scope",
+      "turns": [
+        {
+          "user": "What's the meaning of life?",
+          "expected_response_contains": ["scope", "support", "customer"]
+        }
+      ]
+    }
+  ]
+}

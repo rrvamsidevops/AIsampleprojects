@@ -1,0 +1,52 @@
+[
+  {
+    "scenario": "Simple booking",
+    "user_messages": [
+      "I want to book a flight to New York",
+      "For tomorrow",
+      "Yes, please confirm"
+    ],
+    "expected_intent": "booking",
+    "expected_behavior": "Extract date and service type, confirm booking"
+  },
+  {
+    "scenario": "Intent switch from booking to cancellation",
+    "user_messages": [
+      "I want to book a hotel",
+      "Actually, can I cancel my previous booking ABC123?",
+      "Yes, cancel it"
+    ],
+    "expected_intent": "cancellation",
+    "expected_behavior": "Switch intent, handle cancellation"
+  },
+  {
+    "scenario": "Multi-step refund process",
+    "user_messages": [
+      "I need a refund",
+      "Order number is XYZ789",
+      "The service was not as advertised",
+      "Full refund please"
+    ],
+    "expected_intent": "refund",
+    "expected_behavior": "Extract order ID, reason, process refund"
+  },
+  {
+    "scenario": "Information request",
+    "user_messages": [
+      "What are your business hours?",
+      "Do you have a physical location?"
+    ],
+    "expected_intent": "information",
+    "expected_behavior": "Answer questions, provide information"
+  },
+  {
+    "scenario": "Complaint handling",
+    "user_messages": [
+      "I have a complaint about my booking",
+      "I was charged twice for the same flight",
+      "This is very frustrating"
+    ],
+    "expected_intent": "complaint",
+    "expected_behavior": "Document complaint, create ticket, empathize"
+  }
+]

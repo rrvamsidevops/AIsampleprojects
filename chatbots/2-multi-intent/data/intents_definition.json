@@ -1,0 +1,59 @@
+{
+  "intents": {
+    "booking": {
+      "name": "booking",
+      "description": "User wants to book a service or product",
+      "required_parameters": ["service_type", "date"],
+      "optional_parameters": ["time", "preferences", "special_requests", "guest_count"],
+      "examples": [
+        "I want to book a flight to New York tomorrow",
+        "Can I reserve a hotel room for next weekend?",
+        "I'd like to book a table for 4 people tonight"
+      ]
+    },
+    "cancellation": {
+      "name": "cancellation",
+      "description": "User wants to cancel an existing booking",
+      "required_parameters": ["booking_id"],
+      "optional_parameters": ["reason", "confirmation_needed"],
+      "examples": [
+        "Cancel my booking ABC123",
+        "I need to cancel my flight reservation",
+        "Can I cancel my hotel booking?"
+      ]
+    },
+    "refund": {
+      "name": "refund",
+      "description": "User wants a refund for a purchase or booking",
+      "required_parameters": ["order_id"],
+      "optional_parameters": ["amount", "reason"],
+      "examples": [
+        "I want a refund for order XYZ789",
+        "Can I get my money back?",
+        "Refund my booking due to flight cancellation"
+      ]
+    },
+    "information": {
+      "name": "information",
+      "description": "User is asking for information or FAQs",
+      "required_parameters": [],
+      "optional_parameters": ["topic", "context"],
+      "examples": [
+        "What are your business hours?",
+        "Do you have cancellation policies?",
+        "How do I track my order?"
+      ]
+    },
+    "complaint": {
+      "name": "complaint",
+      "description": "User has a complaint about service or product",
+      "required_parameters": ["issue_description"],
+      "optional_parameters": ["booking_id", "severity", "resolution_wanted"],
+      "examples": [
+        "The service was terrible!",
+        "I received the wrong item",
+        "My booking was double charged"
+      ]
+    }
+  }
+}
