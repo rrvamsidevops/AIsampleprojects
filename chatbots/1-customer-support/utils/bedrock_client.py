@@ -60,7 +60,8 @@ class BedrockClient:
         try:
             # Prepare request body for Claude
             request_body = {
-                "anthropic_version": "bedrock-2023-06-01",
+                "anthropic_version": "bedrock-2023-05-31",
+                
                 "max_tokens": max_tokens,
                 "system": system_prompt,
                 "messages": messages,
@@ -84,7 +85,16 @@ class BedrockClient:
                 return None
 
         except ClientError as e:
-            logger.error(f"Bedrock client error: {e}")
+            error_code = e.response.get("Error", {}).get("Code", "")
+            error_msg = e.response.get("Error", {}).get("Message", "")
+            
+            if error_code == "ResourceNotFoundException" and "use case details" in error_msg:
+                logger.error(
+                    f"Bedrock model access error: {error_msg}\n"
+                    "ACTION REQUIRED: Complete the Anthropic use case details form in AWS Console > Bedrock > Model Access"
+                )
+            else:
+                logger.error(f"Bedrock client error: {e}")
             return None
         except BotoCoreError as e:
             logger.error(f"Bedrock boto error: {e}")

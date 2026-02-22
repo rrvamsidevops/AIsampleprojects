@@ -13,7 +13,8 @@ AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 AWS_PROFILE = os.getenv("AWS_PROFILE", "default")
 
 # Bedrock Configuration
-BEDROCK_MODEL_ID = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+#BEDROCK_MODEL_ID = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+BEDROCK_MODEL_ID = "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
 MODEL_TEMPERATURE = 0.7  # Balanced between deterministic and creative
 MODEL_MAX_TOKENS = 1000  # Reasonable limit for support responses
 MODEL_TOP_P = 0.95

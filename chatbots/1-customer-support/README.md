@@ -90,9 +90,11 @@ python app.py
 
 ## 📚 Documentation
 
+- **[ARCHITECTURE](docs/ARCHITECTURE.md)** - System design and component overview
 - **[SETUP](docs/AWS_SETUP.md)** - AWS Bedrock IAM permissions & configuration
 - **[TESTING](docs/TESTING.md)** - Unit tests, integration tests, and troubleshooting
-- **[Manual Setup](README.md#manual-setup)** - Step-by-step manual installation
+- **[INDEX](docs/INDEX.md)** - Documentation index and navigation
+- **[Manual Setup](#manual-setup)** - Step-by-step manual installation
 
 ---
 
