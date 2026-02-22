@@ -1,63 +1,52 @@
-# FAQ Retrieval Chatbot (RAG Application)
+# FAQ Retrieval Chatbot
 
-## Overview
-A conversational FAQ chatbot that retrieves relevant answers from a knowledge base and grounds responses in retrieved documents. Built with AWS Bedrock (Claude 3.5 Sonnet) + vector embeddings for semantic search.
-
-## Purpose
-This is a **foundational RAG application** that demonstrates:
-- Document ingestion and embedding generation
-- Vector-based semantic retrieval
-- Multi-turn conversation with retrieval context
-- Grounding responses in retrieved documents
-- Handling out-of-context questions gracefully
-- Integration of retrieval with conversational AI
-
-## Application Structure
-```
-1-faq-retrieval-chatbot/
-├── README.md                      # This file
-├── requirements.txt               # Python dependencies
-├── app.py                         # Main RAG chatbot application
-├── config.py                      # Configuration & constants
-├── knowledge_base/
-│   ├── faqs.json                 # FAQ documents
-│   └── documents.md              # Raw markdown documents
-├── embeddings/
-│   ├── embeddings.pkl            # Cached embeddings (vector DB)
-│   └── embeddings_index.json     # Index mapping
-├── prompts/
-│   ├── system_prompt.txt         # System instructions for bot
-│   ├── retrieval_prompt.txt      # Context formatting prompt
-│   └── examples.json             # Few-shot examples
-├── logs/
-│   └── chatbot.log              # Application logs
-├── data/
-│   ├── sample_interactions.json  # Sample Q&A interactions
-│   └── retrieval_metrics.json    # Retrieval performance data
-└── utils/
-    ├── bedrock_client.py         # Bedrock integration
-    ├── embeddings_client.py      # Embedding generation (Bedrock or external)
-    ├── vector_store.py           # In-memory vector database
-    └── retriever.py              # Semantic search & ranking
-```
+A simple chatbot that retrieves answers to frequently asked questions (FAQs) using keyword matching. Easily extendable to semantic search or vector-based retrieval.
 
 ## Features
-✅ **Document ingestion** – Load and parse FAQ documents
-✅ **Embedding generation** – Create vector embeddings for all documents
-✅ **Semantic retrieval** – Find relevant docs using vector similarity
-✅ **Context grounding** – Include retrieved docs in LLM prompt
-✅ **Multi-turn conversation** – Maintain context while retrieving per turn
-✅ **Relevance ranking** – Score and filter retrieved results
-✅ **Out-of-scope handling** – Detect questions not in knowledge base
-✅ **Claude 3.5 Sonnet** – High-quality retrieval-grounded responses
-✅ **Logging & metrics** – Track retrieval performance
+- Loads FAQs from a JSON file
+- Simple keyword-based retrieval
+- Modular structure (utils, test, docs)
+- Logging to logs/
+- Environment-based configuration
 
-## Key Files
+## Project Structure
+```
+.
+├── app.py
+├── config.py
+├── requirements.txt
+├── .env
+├── .gitignore
+├── data/
+│   └── faq.json
+├── utils/
+│   ├── __init__.py
+│   └── faq_retriever.py
+├── test/
+│   ├── __init__.py
+│   └── test_faq_retriever.py
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── INDEX.md
+│   ├── SETUP.md
+│   └── TESTING.md
+├── logs/
+```
 
-### `app.py`
-Main application with:
-- `FAQRetrievalChatbot` class
-- Conversation loop with retrieval
+## Setup
+See [docs/SETUP.md](docs/SETUP.md) for environment and installation instructions.
+
+## Architecture
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for design and extensibility notes.
+
+## Testing
+Run tests with:
+```bash
+python -m unittest discover -s test
+```
+
+## License
+MIT
 - Retrieved context formatting
 - Response generation with grounding
 

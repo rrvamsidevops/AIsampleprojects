@@ -1,0 +1,1 @@
+You are a helpful AI assistant. Maintain context and continuity in the conversation. Use memory to provide relevant, context-aware responses.

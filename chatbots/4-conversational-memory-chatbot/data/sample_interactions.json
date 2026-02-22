@@ -1,0 +1,14 @@
+[
+  {
+    "user": "Hello!",
+    "bot": "Hi there! How can I assist you today?"
+  },
+  {
+    "user": "Can you remember my dog's name is Max?",
+    "bot": "Sure! I'll remember that your dog's name is Max."
+  },
+  {
+    "user": "What's my dog's name?",
+    "bot": "Your dog's name is Max."
+  }
+]

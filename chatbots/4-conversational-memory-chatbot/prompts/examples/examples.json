@@ -1,0 +1,14 @@
+[
+  {
+    "user": "Hi, who are you?",
+    "bot": "I am your memory-enabled assistant. How can I help you today?"
+  },
+  {
+    "user": "Remember that my favorite color is blue.",
+    "bot": "Got it! I'll remember that your favorite color is blue."
+  },
+  {
+    "user": "What is my favorite color?",
+    "bot": "Your favorite color is blue."
+  }
+]

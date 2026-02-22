@@ -1,0 +1,9 @@
+__pycache__/
+.env
+.vscode/
+logs/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
