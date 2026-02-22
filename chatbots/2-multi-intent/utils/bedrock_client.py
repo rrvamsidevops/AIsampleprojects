@@ -15,9 +15,19 @@ class BedrockClient:
     
     def __init__(self):
         """Initialize Bedrock client"""
-        self.client = boto3.client("bedrock-runtime", region_name=config.AWS_REGION)
-        self.model_id = config.BEDROCK_MODEL_ID
-        self.logger = logging.getLogger(__name__)
+        try:
+            # Create session with proper AWS profile and region
+            session = boto3.Session(
+                profile_name=config.AWS_PROFILE,
+                region_name=config.AWS_REGION
+            )
+            self.client = session.client("bedrock-runtime", region_name=config.AWS_REGION)
+            self.model_id = config.BEDROCK_MODEL_ID
+            self.logger = logging.getLogger(__name__)
+            self.logger.info(f"Bedrock client initialized with model: {self.model_id}")
+        except Exception as e:
+            logging.getLogger(__name__).error(f"Failed to initialize Bedrock client: {e}")
+            raise
     
     def invoke_model(self, 
                     system_prompt: str, 
@@ -46,14 +56,18 @@ class BedrockClient:
         messages.append({"role": "user", "content": user_message})
         
         try:
+            # Build request body according to Bedrock API specification
+            request_body = {
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": max_tokens,
+                "system": system_prompt,
+                "messages": messages,
+                "temperature": temperature
+            }
+            
             response = self.client.invoke_model(
                 modelId=self.model_id,
-                system=system_prompt,
-                messages=messages,
-                inferenceConfig={
-                    "temperature": temperature,
-                    "maxTokens": max_tokens
-                }
+                body=json.dumps(request_body)
             )
             
             # Parse response
@@ -144,7 +158,7 @@ Respond with valid JSON only (no markdown):
   "confidence": <0.0-1.0>
 }}"""
         
-        response, _ = self.invoke_model(prompt, "", conversation_history)
+        response, _ = self.invoke_model(prompt, user_message, conversation_history)
         
         try:
             return json.loads(response)

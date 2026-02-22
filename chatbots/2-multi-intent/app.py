@@ -191,7 +191,7 @@ class MultiIntentChatbot:
         print("Multi-Intent Chatbot")
         print("="*60)
         print("I can help you with: booking, cancellation, refund, information, or complaints")
-        print("Type 'quit' to exit, 'summary' for conversation summary")
+        print("Commands: 'exit' or 'quit' to end, 'summary' for conversation summary")
         print("="*60 + "\n")
         
         while True:
@@ -201,7 +201,7 @@ class MultiIntentChatbot:
                 if not user_input:
                     continue
                 
-                if user_input.lower() == "quit":
+                if user_input.lower() in ("quit", "exit", "bye", "goodbye"):
                     print("\nThank you for using Multi-Intent Chatbot. Goodbye!")
                     break
                 

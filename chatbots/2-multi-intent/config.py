@@ -11,7 +11,8 @@ load_dotenv()
 
 # AWS Configuration
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
-BEDROCK_MODEL_ID = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+AWS_PROFILE = os.getenv("AWS_PROFILE", "default")
+BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "us.anthropic.claude-3-5-sonnet-20241022-v2:0")
 
 # Model Parameters
 MODEL_TEMPERATURE = 0.7

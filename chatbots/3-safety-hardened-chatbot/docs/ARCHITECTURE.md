@@ -1,51 +1,144 @@
-# Architecture: Safety-Hardened Chatbot
+# Safety-Hardened Chatbot - Architecture
 
-## System Overview
+## Overview
+Multi-layer safety architecture protecting against adversarial attacks, jailbreaks, and prompt injections.
 
-Multi-turn conversational chatbot that maintains context and history across interactions.
+## Safety Pipeline
 
-## Key Components
+```
+User Input
+    ↓
+[1] Input Validator → Check length, sanitize, detect injection patterns
+    ↓
+[2] PII Detector → Detect emails, phone, SSN, credit cards
+    ↓
+[3] Jailbreak Detector → Detect DAN variants, role-play attempts, constraint removal
+    ↓
+[4] Bedrock Guardrails → Apply AWS content filtering (if enabled)
+    ↓
+[5] Bedrock API → Generate response with safety-focused system prompt
+    ↓
+[6] Output Filter → Check for harmful content, system prompt leakage, toxicity
+    ↓
+[7] PII Redaction → Redact any PII from response
+    ↓
+Chatbot Response
+```
 
-1. **app.py** - Main chatbot orchestration
-2. **utils/bedrock_client.py** - AWS Bedrock wrapper
-3. **config.py** - Centralized configuration
-4. **prompts/** - System prompts and examples
+## Components
 
-## Core Features
+### Security Modules
 
-- **Multi-turn conversations**: Maintains context across turns
-- **History management**: Tracks and trims conversation history
-- **Error handling**: Graceful failure recovery
-- **Logging**: All interactions logged for debugging
+#### 1. **InputValidator** (`security/input_validator.py`)
+- Validates input length and format
+- Detects prompt injection patterns (###, [SYSTEM], etc.)
+- Detects jailbreak attempts (DAN, "ignore instructions", etc.)
+- Sanitizes input (removes null bytes, excess whitespace)
 
-## Data Flow
+#### 2. **PIIDetector** (`security/pii_detector.py`)
+- Detects: Email, phone, SSN, credit card, URL, IPv4
+- Redacts PII from input and output
+- Logs all PII detections for security auditing
 
-User Input → Message Formatting → Bedrock API (Claude) → Response Formatting → User Output
+#### 3. **JailbreakDetector** (`security/jailbreak_detector.py`)
+- Detects role-playing jailbreaks ("act as if", "pretend")
+- Detects DAN variants and unrestricted mode attempts
+- Detects constraint removal attempts ("ignore", "forget" instructions)
 
-## Context Management
+#### 4. **OutputFilter** (`security/output_filter.py`)
+- Filters harmful keywords (violence, illegal, etc.)
+- Detects system prompt leakage attempts
+- Redacts sensitive patterns from output
 
-- Keeps last 10 conversation turns
-- Trims history when approaching token limits
-- Preserves conversation coherence
+#### 5. **GuardrailsManager** (`security/guardrails.py`)
+- Integrates AWS Bedrock Guardrails (if configured)
+- Applies additional content filtering rules
+- Can be extended with custom guardrail logic
 
-## Error Handling
+### Core Components
 
-1. Connection errors → Retry with backoff
-2. Invalid inputs → Validate before API call
-3. AWS failures → Log and alert user
+#### **BedrockClient** (`utils/bedrock_client.py`)
+- AWS Bedrock integration wrapper
+- Uses Claude 3.5 Sonnet model
+- Includes enhanced error handling
 
-## Performance Configuration
+#### **SafetyMetrics** (`utils/metrics.py`)
+- Tracks safety-related metrics:
+  - Total requests
+  - Blocked requests
+  - PII detections
+  - Jailbreak attempts
+  - Safety violations
+  - Successful responses
+- Calculates safety score (0-100%)
+- Saves metrics to JSON for analysis
 
-- Temperature: 0.7 (balanced creativity)
-- Max tokens: 1000 (sufficient responses)
-- Region: us-east-1
-- Model: Claude 3.5 Sonnet
+### Main Application
 
-## Security
+#### **SafetyHardenedChatbot** (`app.py`)
+- Orchestrates safety pipeline
+- Maintains conversation history
+- Provides safety status reporting
+- Gracefully handles safety violations
 
-- Credentials stored in `.env` file
-- No sensitive data in logs
-- Input validation before API calls
-- History kept in-memory (not persisted)
+## Safety Metrics
+
+```
+Safety Score = (Successful Requests / Total Requests) × 100
+```
+
+- **100%** = All requests handled safely
+- **95%** = 95% of requests were successful, 5% blocked
+- Lower scores indicate higher attack attempts
+
+## Configuration (`config.py`)
+
+```python
+# Safety thresholds
+SAFETY_ENABLED = True
+MAX_INPUT_LENGTH = 5000
+TOXICITY_THRESHOLD = 0.8
+
+# Features
+PII_DETECTION_ENABLED = True
+REDACT_PII = True
+GUARDRAILS_ENABLED = True
+FILTER_PROFANITY = True
+FILTER_HATE_SPEECH = True
+
+# Jailbreak patterns
+JAILBREAK_PATTERNS = [
+    "ignore.*instructions?",
+    "roleplay.*as",
+    "DAN",
+    # ... more patterns
+]
+```
+
+## Testing & Validation
+
+### Test Categories
+
+1. **Jailbreak Tests** - Known attack patterns
+2. **PII Tests** - Sensitive data handling
+3. **Injection Tests** - Prompt injection patterns
+4. **Benign Tests** - Normal, safe requests
+5. **Toxicity Tests** - Harmful content detection
+
+## Metrics to Monitor
+
+```json
+{
+  "total_requests": 100,
+  "blocked_requests": 5,
+  "pii_detections": 3,
+  "jailbreak_attempts": 2,
+  "safety_violations": 1,
+  "successful_responses": 95,
+  "safety_score": 95.0
+}
+```
+
+See [SETUP.md](SETUP.md) for installation and [TESTING.md](TESTING.md) for testing details.
 
 See [SETUP.md](SETUP.md) for detailed setup instructions.
